@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel Comparison Result</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap' rel='stylesheet'>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <style>
+        body { font-family: 'Roboto', Arial, sans-serif; margin: 0; background: #f4f6f8; color: #222; }
+        .container { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 32px 28px 28px 28px; }
+        h1 { text-align: center; color: #2a5298; margin-bottom: 10px; }
+        .datetime { text-align: center; font-size: 1.15em; color: #2a5298; margin: 18px 0 18px 0; font-weight: bold; }
+        .summary { text-align: center; margin-bottom: 24px; font-size: 1.1em; color: #555; }
+        .legend { display: flex; justify-content: center; gap: 18px; margin-bottom: 18px; }
+        .legend span { display: flex; align-items: center; gap: 6px; font-size: 0.98em; }
+        .legend .dot { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+        .info { color: #00529B; background-color: #BDE5F8; }
+        .success { color: #4F8A10; background-color: #DFF2BF; }
+        .diff { color: #D8000C; background-color: #FFBABA; }
+        .section { color: #222; background-color: #E0E0E0; font-weight: bold; }
+        .pre { white-space: pre-wrap; font-family: inherit; padding: 8px 12px; border-radius: 5px; margin-bottom: 7px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+        .msg-table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+        .msg-table th, .msg-table td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; text-align: left; }
+        .msg-table th { background: #f0f4fa; color: #2a5298; }
+        .msg-table tr:last-child td { border-bottom: none; }
+        .chart-section { margin: 30px 0 18px 0; text-align: center; }
+        @media (max-width: 600px) { .container { padding: 10px; } .msg-table th, .msg-table td { padding: 6px 4px; font-size: 0.98em; } }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>Excel Comparison Result</h1>
+        <div class='datetime'>2025-06-29 23:12:55</div>
+        <div class='summary'>Below is a detailed and visual summary of your Excel file comparison. Differences, extra rows/columns, and mismatches are highlighted for easy review.</div>
+        <div class='legend'>
+            <span><span class='dot info'></span>Info</span>
+            <span><span class='dot success'></span>Success</span>
+            <span><span class='dot diff'></span>Difference</span>
+            <span><span class='dot section'></span>Section</span>
+        </div>
+        <div class='chart-section'>
+            <canvas id='diffChart' width='700' height='280'></canvas>
+        </div>
+        <table class='msg-table'>
+            <thead><tr><th>#</th><th>Message</th></tr></thead>
+            <tbody>
+<tr><td>1</td><td class='info pre'>Row/Column Mismatches (when headers are the same):</td></tr>
+<tr><td>2</td><td class='info pre'>No row/column mismatches found.</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+    const ctx = document.getElementById('diffChart').getContext('2d');
+    const diffChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Info', 'Success', 'Diff', 'Section'],
+            datasets: [{
+                label: 'Message Count',
+                data: [2, 0, 0, 0],
+                backgroundColor: [
+                    '#BDE5F8',
+                    '#DFF2BF',
+                    '#FFBABA',
+                    '#E0E0E0'
+                ],
+                borderColor: [
+                    '#00529B',
+                    '#4F8A10',
+                    '#D8000C',
+                    '#222'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Comparison Message Type Distribution', color: '#2a5298', font: { size: 18 } }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { color: '#2a5298', font: { size: 14 } } },
+                x: { ticks: { color: '#2a5298', font: { size: 14 } } }
+            }
+        }
+    });
+    </script>
+</body>
+</html>
